@@ -20,7 +20,7 @@ class yf_dn:
     def yf_data(self, symbol, st_date=None, en_date=None, period=None):
         if st_date is None:
             st_date = dt.datetime.now() - dt.timedelta(days=59)
-        h_data = yf.download(symbol, start=st_date, end=en_date, period=period, interval='5m')
+        h_data = yf.download(symbol, start=st_date, end=en_date, period=period, interval='5m', prepost=False)
         return h_data
     def yf_bl_data(self, symbol):
         st_dt = (dt.datetime.today() - dt.timedelta(days=365*10)).strftime('%y-%m-%d')
