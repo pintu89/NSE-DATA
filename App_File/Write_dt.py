@@ -59,10 +59,9 @@ class DataDownloader:
         for symbol in tqdm(self.stock_list, desc="downloading 5-minute data", unit="stock"):
             data = self.yf_dn_obj.yf_data(symbol=symbol, st_date=st_date)
             if data is not None and not data.empty:
-                data_resampled = data.resample('5T').ffill()
                 file_name = os.path.join(self.dir5, f"{symbol}.xlsx")
                 with pd.ExcelWriter(file_name) as writer:
-                    for date, df in data_resampled.groupby(data_resampled.index.date):
+                    for date, df in data.groupby(data.index.date):
                         df.index = df.index.tz_localize(None)
                         df.to_excel(writer, sheet_name=str(date), index=True)
         print("All 5-minute data saved.")
