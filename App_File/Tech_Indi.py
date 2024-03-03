@@ -21,13 +21,24 @@ class Tech_model:
         else:
             return 0
 '''
-# Uses
-if __name__ == '__main__':
-    tech_model = Tech_model().SMA(), Tech_model().EMA(), Tech_model().RSI()
-    print(tech_model.df)
-    print(tech_model.df['SMA'])
-    print(tech_model.df['EMA'])
-    print(tech_model.df['RSI'])
+sma_low = 10
+sma_high = 27
+ema_low = 7
+ema_high = 15
+period = 14
+yf_dn_obj = dn.yf_dn.yf_data
+dt5 = {}
+for symbol in sym:
+    #Technical Indicators
+    tech_model = td.Tech_model()
+
+    #SMA
+    low_sma, high_sma = tech_model.SMA(df=data, low_timeperiod=sma_low, high_timeperiod=sma_high)
+    
+    #EMA
+    low_ema, high_ema = tech_model.EMA(df=data, low_timeperiod=ema_low, high_timeperiod=ema_high)
+    #RSI
+    rsi = tech_model.RSI(df=data, window=period)
+    #Position of Up or Down.
+    data['Position'] = data.apply(tech_model.Perpus, axis=1)
 '''
-
-

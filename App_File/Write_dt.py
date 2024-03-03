@@ -66,3 +66,9 @@ class DataDownloader:
                         df.to_excel(writer, sheet_name=str(date), index=True)
         print("All 5-minute data saved.")
 
+if __name__ == "__main__":
+    file_path = "../Data_File/hisdata"
+    symbols = symbols
+    data_type = input("Enter data type to download (ap_data, balance_sheet, historical_data, 5min_data): ")
+    downloader = DataDownloader(file_path,symbols=symbols)
+    downloader.download_and_save_data(data_type)
