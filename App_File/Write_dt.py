@@ -17,13 +17,13 @@ class DataDownloader:
         self.dir5 = '../Data_File/hisdata/5Min_data/'
 
     def download_and_save_data(self, data_type):
-        if data_type == "ap_data":
+        if data_type == "0":
             self.download_ap_data()
-        elif data_type == "balance_sheet":
+        elif data_type == "1":
             self.download_balance_sheet()
-        elif data_type == "historical_data":
+        elif data_type == "2":
             self.download_historical_data()
-        elif data_type == "5min_data":
+        elif data_type == "3":
             self.download_5min_data()
 
     def download_ap_data(self):
@@ -60,10 +60,28 @@ class DataDownloader:
             data = self.yf_dn_obj.yf_data(symbol=symbol, st_date=st_date)
             if data is not None and not data.empty:
                 file_name = os.path.join(self.dir5, f"{symbol}.xlsx")
-                with pd.ExcelWriter(file_name) as writer:
-                    for date, df in data.groupby(data.index.date):
-                        df.index = df.index.tz_localize(None)
-                        df.to_excel(writer, sheet_name=str(date), index=True)
+                if os.path.isfile(file_name):
+                    with pd.ExcelWriter(file_name, engine='openpyxl',mode='a') as writer:
+                        for date, df in data.groupby(data.index.date):
+                            df.index = df.index.tz_localize(None)
+                            sheet_name = str(date)
+                            try:
+                                df.to_excel(writer, sheet_name=str(date), index=True)
+                            except ValueError:
+                                # If sheet with the same name already exists, modify the name
+                                idx = 1
+                                while True:
+                                    new_sheet_name = f"{sheet_name}_{idx}"
+                                    try:
+                                        df.to_excel(writer, sheet_name=new_sheet_name, index=True)
+                                        break
+                                    except ValueError:
+                                        idx += 1     
+                else:
+                    with pd.ExcelWriter(file_name) as writer:
+                        for date, df in data.groupby(data.index.date):
+                            df.index = df.index.tz_localize(None)
+                            df.to_excel(writer, sheet_name=str(date), index=True)
         print("All 5-minute data saved.")
 
 if __name__ == "__main__":

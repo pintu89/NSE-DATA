@@ -6,7 +6,7 @@ symbols = rf.Read_xlsx_File.symbols(data)
 # Wite File
 file_path = "../Data_File/hisdata"
 symbols = symbols
-data_type = input("Enter data type to download (ap_data, balance_sheet, historical_data, 5min_data): ")
+data_type = input("0:  ap_data,\n1:  balance_sheet,\n2:  historical_data,\n3:  5min_data,\nEnter data type to download: ")
 
 # Check if data_type is specified and not empty
 if data_type:
@@ -14,7 +14,13 @@ if data_type:
     downloader.download_and_save_data(data_type)
 else:
     print("No data type specified. Skipping download.")
-
+Tfile = input("0: historical_data,\n1: 5min_data,\nEnter your choice: ")
+if Tfile == "0":
+    file_path = "../Data_File/hisdata/hdata/"
+elif Tfile == "1":
+    file_path = "../Data_File/hisdata/5min_data"
+else:
+    pass
 for symbol in symbols:
     try:
         # Assuming the file names are in the format 'hisdata/symbol.xlsx'
@@ -23,4 +29,5 @@ for symbol in symbols:
         # Do something with Hdata
         print(f"Data for {symbol} is read successfully.")
     except FileNotFoundError:
-        print(f"File for {symbol} not found.")
+        pass
+        #print(f"File for {symbol} not found.")
