@@ -14,6 +14,9 @@ if data_type:
     downloader.download_and_save_data(data_type)
 else:
     print("No data type specified. Skipping download.")
+
+
+
 Tfile = input("0: historical_data,\n1: 5min_data,\nEnter your choice: ")
 if Tfile == "0":
     file_path = "../Data_File/hisdata/hdata/"
