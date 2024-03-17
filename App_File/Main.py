@@ -1,5 +1,16 @@
 import Read_file as rf
 from Write_dt import DataDownloader
+import sys
+sys.path.append('../') 
+from Confi_File.Signals import generate_signals
+
+sma_low = 10
+sma_high = 27
+ema_low = 7
+ema_high = 15
+period = 14
+dt5 = {}
+
 #Read_file
 data = rf.Read_xlsx_File.Read_xlsx_File("../Data_File/sym_data/NIFTY.xlsx", int(input("0 = NFITY50\n1 = NIFTY100\n2 = NFITY200\n3 = NIFTY-NEXT50\n4 = Please inter your symbols in Port_folio1 and numbers are continues.5 6 7\n Please enter your Choice: ")))
 symbols = rf.Read_xlsx_File.symbols(data)
