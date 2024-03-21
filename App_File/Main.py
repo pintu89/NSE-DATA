@@ -82,20 +82,3 @@ for symbol in symbols:
         pass
         #print(f"File for {symbol} not found.")
 
-
-'''
-        else:
-            total_loss += abs(profit_loss)
-            # Find buy and sell prices
-            buy_prices = Hdata.loc[Hdata['Buy'] == 1, 'Close'].iloc[0]
-            sell_prices = Hdata.loc[Hdata['Sell'] == -1, 'Close'].iloc[0]
-            if isinstance(buy_prices, float):
-                buy_prices = [buy_prices]
-            if isinstance(sell_prices, float):
-                sell_prices = [sell_prices]
-            for i, (buy_price, sell_price) in enumerate(zip(buy_prices, sell_prices)):
-                loss_amount = abs(sell_price - buy_price)
-                print(f"Loss {i+1} for {symbol}: Rs. {loss_amount}, Buy Price: Rs. {buy_price}, Sell Price: Rs. {sell_price}")
-        print(f"Total Amount {wealth}: Rs. {total_profit}")
-        print(f"Total Loss across all symbols: Rs. {total_loss}")
-        '''
