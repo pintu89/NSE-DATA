@@ -14,6 +14,10 @@ class Tech_model:
     def RSI(self, df, window=14):
         df[f'RSI_{window}'] = ta.rsi(df['Close'], timeperiod=window)
         return df[f'RSI_{window}']
+        
+    def VWAP(self, df, window=14):
+        df['VWAP'] = ta.vwap(close=df['Close'], volume=df['Volume'], high=df['High'], low=df['Low'], length=window)
+        return df['VWAP']
 
     def Perpus(self, df):
         if df['Close'] - df['Open'] > 1:

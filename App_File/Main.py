@@ -45,10 +45,17 @@ for symbol in symbols:
         # Assuming the file names are in the format 'hisdata/symbol.xlsx'
         file = f"{file_path}/{symbol}.xlsx"
         Hdata = rf.Read_xlsx_File.Read_xlsx_File(file)
+        
+
         # Do something with Hdata
         low_sma, high_sma = tech_model.SMA(df=Hdata, low_timeperiod=sma_low, high_timeperiod=sma_high)
         low_ema, high_ema = tech_model.EMA(df=Hdata, low_timeperiod=sma_low, high_timeperiod=sma_high)
         rsi = tech_model.RSI(df=Hdata, window=period)
+        if Tfile == "1":
+            Hdata.set_index('Datetime', inplace=True)
+            Hdata = Hdata.sort_index()
+            vwap = tech_model.VWAP(df=Hdata, window=period)
+
         sig1 = Adhya_strategy(Hdata,sma_low, sma_high,period, stop_loss)
 
         #Hdata['Position'] = Hdata.apply(tech_model.Perpus, axis=1)

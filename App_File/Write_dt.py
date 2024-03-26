@@ -17,13 +17,17 @@ class DataDownloader:
         self.dir5 = '../Data_File/hisdata/5Min_data/'
 
     def download_and_save_data(self, data_type):
-        if data_type == "0":
-            self.download_ap_data()
-        elif data_type == "1":
-            self.download_balance_sheet()
-        elif data_type == "2":
+        if data_type == "1":
             self.download_historical_data()
+        elif data_type == "2":
+            self.download_5min_data()
         elif data_type == "3":
+            self.download_ap_data()
+        elif data_type == "4":
+            self.download_balance_sheet()
+        elif data_type == "0":
+            pass
+        else:
             self.download_5min_data()
 
     def download_ap_data(self):
@@ -40,8 +44,8 @@ class DataDownloader:
         for symbol in tqdm(self.stock_list, desc="downloading balance sheet data", unit="stock"):
             data = self.yf_dn_obj.yf_bl_data(symbol=symbol)
             all_F_data[symbol] = data
-            file_name = os.path.join(self.dirF, f"{symbol}.xlsx")
             data.to_excel(file_name, index=True)
+            file_name = os.path.join(self.dirF, f"{symbol}.xlsx")
         print("All balance sheet data saved.")
 
     def download_historical_data(self):
